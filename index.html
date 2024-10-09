@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Técnica Pomodoro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="timer-header">
+            <button id="pomodoro-mode">Pomodoro</button>
+            <button id="short-break-mode">Pausa Curta</button>
+            <button id="long-break-mode">Pausa Longa</button>
+        </header>
+        
+        <div id="timer-container">
+            <h1 id="timer">25:00</h1>
+            <button id="start-timer">Iniciar</button>
+        </div>
+
+        <div class="tasks-container">
+            <h2>Tarefas</h2>
+            <input type="text" id="task-input" placeholder="Escreva sua tarefa...">
+            <button id="add-task">Adicionar Tarefa</button>
+            <ul id="task-list"></ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
