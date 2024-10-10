@@ -14,7 +14,7 @@ let currentMode = 'pomodoro'; // Define o modo inicial como Pomodoro
 // Modos de duração
 const modes = {
     pomodoro: 25 * 60,
-    shortBreak: 5 * 60,
+    shortBreak: 1 * 5,
     longBreak: 15 * 60
 };
 
@@ -57,11 +57,18 @@ function updateTimer() {
         updateTimerDisplay();
     } else {
         clearInterval(countdown);
+        playSound(); // Toca o som de alerta
         alert("O tempo acabou! Trocando de modo.");
         isRunning = false;
         switchMode(); // Troca para pausa ou volta ao Pomodoro
         startButton.textContent = "Iniciar";
     }
+}
+
+// Função para tocar som de alerta
+function playSound() {
+    let alertSound = new Audio('alert.mp3');
+    alertSound.play();
 }
 
 // Mudar para Pomodoro (25 minutos)
