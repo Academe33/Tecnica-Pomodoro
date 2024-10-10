@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Montserrat', sans-serif;
     background-color: #7E32D6;
     color: #fff;
     display: flex;
@@ -15,6 +15,24 @@ body {
     border-radius: 10px;
     padding: 20px;
     text-align: center;
+    position: relative;
+}
+
+.logo-container {
+    position: absolute;
+    top: 125px;
+    left: -10px;
+    transform: scale(0.7); /* Reduz a logo em 50% */
+}
+
+.logo {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo-me {
+    color: #000; /* Alterado para preto */
 }
 
 .header-buttons button, .timer-header button, #start-timer {
