@@ -65,7 +65,7 @@ function updateTimer() {
     } else {
         clearInterval(countdown);
         playSound();  // Toca o som de alerta imediatamente
-        alert("O tempo acabou! Trocando de modo.");  // Exibe o alerta depois que o som já começou a tocar
+        showNotification("O tempo acabou! Trocando de modo.");  // Exibe a notificação sem bloquear
         isRunning = false;
         switchMode();  // Troca para pausa ou volta ao Pomodoro
         startButton.textContent = "Iniciar";
@@ -76,6 +76,25 @@ function updateTimer() {
 function playSound() {
     let alertSound = new Audio('alert.mp3');
     alertSound.play();
+}
+
+// Função para exibir uma notificação não bloqueante
+function showNotification(message) {
+    let notification = document.createElement('div');
+    notification.textContent = message;
+    notification.style.background = '#333';
+    notification.style.color = '#fff';
+    notification.style.padding = '10px';
+    notification.style.position = 'fixed';
+    notification.style.top = '10px';
+    notification.style.right = '10px';
+    notification.style.borderRadius = '5px';
+    notification.style.zIndex = '1000';
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        document.body.removeChild(notification);
+    }, 3000); // Remove a notificação após 3 segundos
 }
 
 // Mudar para Pomodoro (25 minutos)
