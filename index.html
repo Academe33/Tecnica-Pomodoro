@@ -30,8 +30,14 @@
             <input type="text" id="task-input" placeholder="Escreva sua tarefa...">
             <button id="add-task">Adicionar Tarefa</button>
             <ul id="task-list"></ul>
+            <button id="clear-tasks">Limpar Tarefas</button>
         </div>
     </div>
+    
+    <div class="back-button-container">
+        <button id="back-button">Voltar</button>
+    </div>
+
     <script>
         let timerDisplay = document.getElementById('timer');
         let startButton = document.getElementById('start-timer');
@@ -163,6 +169,11 @@
             }
         });
 
+        document.getElementById('clear-tasks').addEventListener('click', function() {
+            taskList.innerHTML = ''; // Remove todas as tarefas da lista
+            localStorage.removeItem('tasks'); // Remove as tarefas salvas no localStorage
+        });
+
         function saveTasks() {
             let tasks = [];
             document.querySelectorAll('#task-list li').forEach(taskItem => {
@@ -184,13 +195,3 @@
     </script>
 </body>
 </html>
-<div class="back-button-container">
-    <button id="back-button">Voltar</button>
-</div>
-
-<script>
-    // Função para voltar à página anterior
-    document.getElementById("back-button").addEventListener("click", function() {
-        window.history.back();
-    });
-</script>
