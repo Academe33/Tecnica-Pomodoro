@@ -35,7 +35,7 @@
     </div>
     
     <div class="back-button-container">
-        <button id="back-button">Voltar</button>
+        <button id="back-button" onclick="goBack()">Voltar</button>
     </div>
 
     <script>
@@ -170,8 +170,8 @@
         });
 
         document.getElementById('clear-tasks').addEventListener('click', function() {
-            taskList.innerHTML = ''; // Remove todas as tarefas da lista
-            localStorage.removeItem('tasks'); // Remove as tarefas salvas no localStorage
+            taskList.innerHTML = ''; 
+            localStorage.removeItem('tasks');
         });
 
         function saveTasks() {
@@ -192,6 +192,11 @@
         }
 
         window.addEventListener('load', loadTasks);
+
+        // Função para voltar à página anterior
+        function goBack() {
+            window.history.back();
+        }
     </script>
 </body>
 </html>
