@@ -1,158 +1,105 @@
-/* Estilo Neumorfismo/Glassmorfismo */
 body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    font-family: 'Montserrat', sans-serif;
+    background-color: #7E32D6;
     color: #fff;
-    padding: 20px;
-    transition: background 0.3s ease;
-}
-
-.app-container {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-header {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-}
-
-#toggle-theme {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-}
-
-#timer-container {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    border: 5px solid rgba(255, 255, 255, 0.3);
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(255, 255, 255, 0.1);
-    margin: 0 auto;
+    height: 100vh;
+    margin: 0;
 }
 
-#timer {
-    font-size: 36px;
-    font-weight: 600;
-}
-
-.controls {
-    margin-top: 20px;
-    text-align: center;
-}
-
-button {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+.app-container {
+    width: 90%; /* Ajuste para ocupar mais espaço em mobile */
+    max-width: 400px; /* Limitar a largura máxima para telas menores */
+    background-color: #5D1F9E;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: none;
-    padding: 10px 20px;
-    color: #fff;
-    cursor: pointer;
-    margin: 5px;
-    transition: background-color 0.3s, transform 0.2s;
+    padding: 20px;
+    text-align: center;
+    position: relative;
 }
 
-button:hover {
-    transform: translateY(-3px);
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.logo {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo-me {
+    color: #000;
+}
+
+.header-buttons button, .timer-header button, #start-timer {
+    background-color: #9E58F3;
+    color: #fff;
+    border: none;
+    padding: 10px 15px; /* Ajustado para botões menores em mobile */
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+    font-size: 16px;
+}
+
+#start-timer {
+    background-color: #fff;
+    color: #7E32D6;
+    margin-top: 10px;
 }
 
 .tasks-container {
-    margin-top: 40px;
-}
-
-.tasks-container h2 {
-    font-weight: 600;
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-input[type="text"] {
-    width: 100%;
-    padding: 10px;
+    background-color: #fff;
+    color: #7E32D6;
+    padding: 15px;
     border-radius: 10px;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    margin-bottom: 10px;
+    margin-top: 20px;
 }
 
-#add-task {
+.tasks-container input, .tasks-container button {
     width: 100%;
-    text-align: left;
-    padding-left: 20px;
-}
-
-#task-list {
-    list-style: none;
-    padding: 0;
-}
-
-#task-list li {
-    display: flex;
-    justify-content: space-between;
     padding: 10px;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    margin-top: 10px;
-    color: #fff;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
 }
 
-#task-list li::after {
-    content: '\u270E';
-    cursor: pointer;
+.tasks-container input {
+    font-size: 14px;
 }
 
-/* Animações */
-.animate-task {
-    animation: fadeIn 0.5s ease-in-out;
+.tasks-container button {
+    font-size: 16px;
 }
 
-@keyframes fadeIn {
-    0% { opacity: 0; transform: scale(0.9); }
-    100% { opacity: 1; transform: scale(1); }
-}
+/* Media queries para dispositivos menores */
+@media (max-width: 768px) {
+    body {
+        height: auto;
+        padding: 20px 0;
+    }
 
-@media (max-width: 600px) {
     .app-container {
-        padding: 10px;
+        width: 95%; /* Ocupa quase toda a largura da tela no mobile */
+        max-width: 100%; /* Remover restrição de largura para mobile */
     }
-    
+
+    .header-buttons button, .timer-header button, #start-timer {
+        font-size: 14px; /* Botões menores em telas pequenas */
+        padding: 8px 10px;
+    }
+
     #timer {
-        font-size: 28px;
+        font-size: 36px; /* Reduzir tamanho do temporizador em mobile */
     }
-}
 
-/* Modo Escuro */
-.dark-mode {
-    background: #121212;
-    color: #fff;
-}
+    .logo {
+        font-size: 20px; /* Reduzir tamanho da logo */
+    }
 
-.dark-mode .app-container {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.dark-mode button {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.dark-mode input[type="text"] {
-    background-color: rgba(255, 255, 255, 0.1);
+    .tasks-container input, .tasks-container button {
+        font-size: 14px;
+    }
 }
