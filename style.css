@@ -103,3 +103,30 @@ body {
         font-size: 14px;
     }
 }
+/* Estilo atualizado para o botão de voltar no canto superior esquerdo */
+.back-button-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+#back-button {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+#back-button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+#back-button:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.6);
+}
