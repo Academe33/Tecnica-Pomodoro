@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Técnica Pomodoro</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="app-container">
+    <div class="app-container glassmorphism">
         <div class="logo-container">
             <h1 class="logo">Acade Educação</h1>
             <span class="logo-me"></span>
@@ -19,18 +20,167 @@
             <button id="long-break-mode">Pausa Longa</button>
         </header>
         
-        <div id="timer-container">
+        <div id="timer-container" class="timer-wrapper">
             <h1 id="timer">25:00</h1>
             <button id="start-timer">Iniciar</button>
         </div>
 
-        <div class="tasks-container">
+        <div class="tasks-container neumorphism">
             <h2>Tarefas</h2>
             <input type="text" id="task-input" placeholder="Escreva sua tarefa...">
             <button id="add-task">Adicionar Tarefa</button>
             <ul id="task-list"></ul>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script>
+        let timerDisplay = document.getElementById('timer');
+        let startButton = document.getElementById('start-timer');
+        let pomodoroButton = document.getElementById('pomodoro-mode');
+        let shortBreakButton = document.getElementById('short-break-mode');
+        let longBreakButton = document.getElementById('long-break-mode');
+        let taskInput = document.getElementById('task-input');
+        let taskList = document.getElementById('task-list');
+
+        let countdown;
+        let isRunning = false;
+        let timeLeft = 25 * 60;
+        let currentMode = 'pomodoro';
+        let cycles = 0;  
+
+        const modes = {
+            pomodoro: 25 * 60,
+            shortBreak: 5,
+            longBreak: 15 * 60
+        };
+
+        function switchMode() {
+            if (currentMode === 'pomodoro') {
+                cycles++;
+                if (cycles % 4 === 0) {
+                    currentMode = 'longBreak';
+                    timeLeft = modes.longBreak;
+                } else {
+                    currentMode = 'shortBreak';
+                    timeLeft = modes.shortBreak;
+                }
+            } else if (currentMode === 'shortBreak' || currentMode === 'longBreak') {
+                currentMode = 'pomodoro';
+                timeLeft = modes.pomodoro;
+            }
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        startButton.addEventListener('click', function () {
+            if (!isRunning) {
+                isRunning = true;
+                countdown = setInterval(updateTimer, 1000);
+                startButton.textContent = "Pausar";
+            } else {
+                clearInterval(countdown);
+                isRunning = false;
+                startButton.textContent = "Iniciar";
+            }
+        });
+
+        function updateTimer() {
+            if (timeLeft > 0) {
+                timeLeft--;
+                updateTimerDisplay();
+            } else {
+                clearInterval(countdown);
+                playSound();
+                showNotification("O tempo acabou! Trocando de modo.");
+                isRunning = false;
+                switchMode();
+                startButton.textContent = "Iniciar";
+            }
+        }
+
+        function playSound() {
+            let alertSound = new Audio('alert.mp3');
+            alertSound.play();
+        }
+
+        function showNotification(message) {
+            let notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.background = '#333';
+            notification.style.color = '#fff';
+            notification.style.padding = '10px';
+            notification.style.position = 'fixed';
+            notification.style.top = '10px';
+            notification.style.right = '10px';
+            notification.style.borderRadius = '5px';
+            notification.style.zIndex = '1000';
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 3000);
+        }
+
+        pomodoroButton.addEventListener('click', function() {
+            clearInterval(countdown);
+            isRunning = false;
+            currentMode = 'pomodoro';
+            timeLeft = modes.pomodoro;
+            updateTimerDisplay();
+            startButton.textContent = "Iniciar";
+        });
+
+        shortBreakButton.addEventListener('click', function() {
+            clearInterval(countdown);
+            isRunning = false;
+            currentMode = 'shortBreak';
+            timeLeft = modes.shortBreak;
+            updateTimerDisplay();
+            startButton.textContent = "Iniciar";
+        });
+
+        longBreakButton.addEventListener('click', function() {
+            clearInterval(countdown);
+            isRunning = false;
+            currentMode = 'longBreak';
+            timeLeft = modes.longBreak;
+            updateTimerDisplay();
+            startButton.textContent = "Iniciar";
+        });
+
+        document.getElementById('add-task').addEventListener('click', function () {
+            let task = taskInput.value;
+            if (task.trim()) {
+                let taskItem = document.createElement('li');
+                taskItem.textContent = task;
+                taskList.appendChild(taskItem);
+                taskInput.value = "";
+                saveTasks();
+            }
+        });
+
+        function saveTasks() {
+            let tasks = [];
+            document.querySelectorAll('#task-list li').forEach(taskItem => {
+                tasks.push(taskItem.textContent);
+            });
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        function loadTasks() {
+            let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            tasks.forEach(task => {
+                let taskItem = document.createElement('li');
+                taskItem.textContent = task;
+                taskList.appendChild(taskItem);
+            });
+        }
+
+        window.addEventListener('load', loadTasks);
+    </script>
 </body>
 </html>
