@@ -6,11 +6,12 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    margin: 0;
 }
 
 .app-container {
-    width: 80%;
-    max-width: 1200px;
+    width: 90%; /* Ajuste para ocupar mais espaço em mobile */
+    max-width: 400px; /* Limitar a largura máxima para telas menores */
     background-color: #5D1F9E;
     border-radius: 10px;
     padding: 20px;
@@ -19,10 +20,7 @@ body {
 }
 
 .logo-container {
-    position: absolute;
-    top: 125px;
-    left: -10px;
-    transform: scale(0.7); /* Reduz a logo em 50% */
+    margin-bottom: 20px;
 }
 
 .logo {
@@ -32,27 +30,30 @@ body {
 }
 
 .logo-me {
-    color: #000; /* Alterado para preto */
+    color: #000;
 }
 
 .header-buttons button, .timer-header button, #start-timer {
     background-color: #9E58F3;
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 15px; /* Ajustado para botões menores em mobile */
     cursor: pointer;
     border-radius: 5px;
+    margin: 5px;
+    font-size: 16px;
 }
 
 #start-timer {
     background-color: #fff;
     color: #7E32D6;
+    margin-top: 10px;
 }
 
 .tasks-container {
     background-color: #fff;
     color: #7E32D6;
-    padding: 20px;
+    padding: 15px;
     border-radius: 10px;
     margin-top: 20px;
 }
@@ -63,4 +64,42 @@ body {
     margin: 5px 0;
     border: none;
     border-radius: 5px;
+}
+
+.tasks-container input {
+    font-size: 14px;
+}
+
+.tasks-container button {
+    font-size: 16px;
+}
+
+/* Media queries para dispositivos menores */
+@media (max-width: 768px) {
+    body {
+        height: auto;
+        padding: 20px 0;
+    }
+
+    .app-container {
+        width: 95%; /* Ocupa quase toda a largura da tela no mobile */
+        max-width: 100%; /* Remover restrição de largura para mobile */
+    }
+
+    .header-buttons button, .timer-header button, #start-timer {
+        font-size: 14px; /* Botões menores em telas pequenas */
+        padding: 8px 10px;
+    }
+
+    #timer {
+        font-size: 36px; /* Reduzir tamanho do temporizador em mobile */
+    }
+
+    .logo {
+        font-size: 20px; /* Reduzir tamanho da logo */
+    }
+
+    .tasks-container input, .tasks-container button {
+        font-size: 14px;
+    }
 }
