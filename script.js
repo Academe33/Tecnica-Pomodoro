@@ -9,21 +9,19 @@ let taskList = document.getElementById('task-list');
 let countdown;
 let isRunning = false;
 let timeLeft = 25 * 60;
-let currentMode = 'pomodoro'; // Define o modo inicial como Pomodoro
-let cycles = 0;  // Contador de ciclos Pomodoro
+let currentMode = 'pomodoro';
+let cycles = 0;  
 
-// Modos de duração
 const modes = {
     pomodoro: 25 * 60,
-    shortBreak: 5, // Mantendo 5 segundos para teste
+    shortBreak: 600,
     longBreak: 15 * 60
 };
 
-// Trocar o modo automaticamente com ciclos
 function switchMode() {
     if (currentMode === 'pomodoro') {
         cycles++;
-        if (cycles % 4 === 0) { // A cada 4 ciclos, faz a pausa longa
+        if (cycles % 4 === 0) {
             currentMode = 'longBreak';
             timeLeft = modes.longBreak;
         } else {
@@ -37,14 +35,12 @@ function switchMode() {
     updateTimerDisplay();
 }
 
-// Atualizar o display do temporizador
 function updateTimerDisplay() {
     let minutes = Math.floor(timeLeft / 60);
     let seconds = timeLeft % 60;
     timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 }
 
-// Iniciar o temporizador
 startButton.addEventListener('click', function () {
     if (!isRunning) {
         isRunning = true;
@@ -57,28 +53,43 @@ startButton.addEventListener('click', function () {
     }
 });
 
-// Atualizar o temporizador
 function updateTimer() {
     if (timeLeft > 0) {
         timeLeft--;
         updateTimerDisplay();
     } else {
         clearInterval(countdown);
-        playSound();  // Toca o som de alerta imediatamente
-        alert("O tempo acabou! Trocando de modo.");  // Exibe o alerta depois que o som já começou a tocar
+        playSound();
+        showNotification("O tempo acabou! Trocando de modo.");
         isRunning = false;
-        switchMode();  // Troca para pausa ou volta ao Pomodoro
+        switchMode();
         startButton.textContent = "Iniciar";
     }
 }
 
-// Função para tocar som de alerta
 function playSound() {
     let alertSound = new Audio('alert.mp3');
     alertSound.play();
 }
 
-// Mudar para Pomodoro (25 minutos)
+function showNotification(message) {
+    let notification = document.createElement('div');
+    notification.textContent = message;
+    notification.style.background = '#333';
+    notification.style.color = '#fff';
+    notification.style.padding = '10px';
+    notification.style.position = 'fixed';
+    notification.style.top = '10px';
+    notification.style.right = '10px';
+    notification.style.borderRadius = '5px';
+    notification.style.zIndex = '1000';
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        document.body.removeChild(notification);
+    }, 3000);
+}
+
 pomodoroButton.addEventListener('click', function() {
     clearInterval(countdown);
     isRunning = false;
@@ -88,7 +99,6 @@ pomodoroButton.addEventListener('click', function() {
     startButton.textContent = "Iniciar";
 });
 
-// Mudar para Pausa Curta (5 segundos)
 shortBreakButton.addEventListener('click', function() {
     clearInterval(countdown);
     isRunning = false;
@@ -98,7 +108,6 @@ shortBreakButton.addEventListener('click', function() {
     startButton.textContent = "Iniciar";
 });
 
-// Mudar para Pausa Longa (15 minutos)
 longBreakButton.addEventListener('click', function() {
     clearInterval(countdown);
     isRunning = false;
@@ -108,19 +117,22 @@ longBreakButton.addEventListener('click', function() {
     startButton.textContent = "Iniciar";
 });
 
-// Adicionar nova tarefa
 document.getElementById('add-task').addEventListener('click', function () {
     let task = taskInput.value;
     if (task.trim()) {
         let taskItem = document.createElement('li');
         taskItem.textContent = task;
         taskList.appendChild(taskItem);
-        taskInput.value = ""; // Limpa o campo de entrada
-        saveTasks(); // Salva as tarefas no localStorage
+        taskInput.value = "";
+        saveTasks();
     }
 });
 
-// Salvar tarefas no localStorage
+document.getElementById('clear-tasks').addEventListener('click', function() {
+    taskList.innerHTML = ''; 
+    localStorage.removeItem('tasks');
+});
+
 function saveTasks() {
     let tasks = [];
     document.querySelectorAll('#task-list li').forEach(taskItem => {
@@ -129,7 +141,6 @@ function saveTasks() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-// Carregar tarefas do localStorage
 function loadTasks() {
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     tasks.forEach(task => {
@@ -139,5 +150,8 @@ function loadTasks() {
     });
 }
 
-// Carregar tarefas ao carregar a página
 window.addEventListener('load', loadTasks);
+
+function goBack() {
+    window.history.back();
+}
