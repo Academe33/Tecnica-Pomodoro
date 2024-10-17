@@ -3,7 +3,7 @@ body {
     background-color: #2B0F4F;
     color: #fff;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: 100vh;
     margin: 0;
@@ -95,4 +95,3 @@ body {
 #back-button:focus {
     outline: none;
 }
-
